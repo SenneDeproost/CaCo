@@ -13,18 +13,17 @@ class Microphone:
         except:
             pass
 
-    def listen(self, duration=5):
+    def observe(self):
         input = ""
         try:
             with self.mic as source:
-                log("Listening..."), self.owner
-                audio = self.recorder.listen(source, duration)
+                log("Listening...", self.owner)
+                audio = self.recorder.listen(source)
                 input = self.recorder.recognize_google(audio)
                 log("Heard: " + input, self.owner)
         except:
-            return input
-
-
+            pass
+        return input
 
 
 

@@ -1,6 +1,6 @@
 import Pyro4 as pyro
 from debug import *
-from devices.Microphone import *
+import threading
 @pyro.expose
 class Observer:
     def __init__(self, name, hosted=False):
@@ -8,11 +8,13 @@ class Observer:
         self.devices = {}
         self.hosted = hosted
         self.name = name
+        self.active = True
+        threading.Thread(target=self.observe_loop, args=()).start()
 
-    def register_devices(self):
-        # Microphone
-        self.devices['microphone'] = Microphone()
-        log("Registered microphone", self.name)
+    def register_device(self, name, device):
+        self.devices[name] = device
+        self.input_space[name] = []
+        log("Registered input device " + name, self.name)
 
     def initialize(self):
         if self.hosted:
@@ -24,4 +26,12 @@ class Observer:
             log("Initializing local observer", self.name)
 
     def observe(self):
-        pass
+        for name, device in self.devices.items():
+            observation = device.observe()
+            self.input_space[name].append(observation)
+
+    def observe_loop(self):
+        while self.active:
+            self.observe()
+
+
