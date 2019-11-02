@@ -12,7 +12,7 @@ class Robot:
     def __init__(self, name, remotes=None):
         self.name = name
         self.remotes = remotes
-        log("Initializing robot " + self.name)
+        log("Initializing robot", self.name)
         self.observer = Observer(self.name)
         self.thinker = Thinker(self.name)
         self.actor = Actor(self.name)

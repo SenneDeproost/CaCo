@@ -1,12 +1,14 @@
 from Robot import *
 from Observer import *
-from devices.Microphone import *
+
+
+import warnings
+warnings.filterwarnings("ignore")
 
 #observer = Observer(hosted=True, name="Jos")
 
 robot = Robot(name="Maya")
-m = Microphone()
-m.listen()
+
 
 
 """ source = self.mic
