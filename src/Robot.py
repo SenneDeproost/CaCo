@@ -20,13 +20,19 @@ class Robot:
         self.actor = Actor(self.name)
         if self.remotes:
             # Observer
-            if self.remotes['observer']:
+            try:
+                self.remotes['observer']
+            except:
                 self.observer = Pyro4.Proxy(self.remotes['observer'])
             # Thinker
-            if self.remotes['thinker']:
+            try:
+                self.remotes['thinker']
+            except:
                 self.thinker = Pyro4.Proxy(self.remotes['thinker'])
             # Actor
-            if self.remotes['actor']:
+            try:
+                self.remotes['actor']
+            except:
                 self.actor = Pyro4.Proxy(self.remotes['actor'])
 
         self.observer.initialize()
