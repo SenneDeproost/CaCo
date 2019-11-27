@@ -24,9 +24,9 @@ class KnowledgeBase:
     def update_entry(self, score, content):
         pass
 
-    def save_kb(self):
+    def save_kb(self, file_name):
+
         pass
 
     def load_kb(self):
         pass
-    

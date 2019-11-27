@@ -38,7 +38,7 @@ class Robot:
         self.observer.initialize()
         self.observer.register_device('microphone', Microphone(self.name))
         self.actor.register_device('speaker', Speaker(self.name))
-        self.actor.devices['speaker'].act("Hi, I am Maya. I like to dance")
+        self.actor.devices['speaker'].act("Hi, I am " + self.name)
 
     def observe(self):
         self.observer.observe()
