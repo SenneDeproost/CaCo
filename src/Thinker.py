@@ -1,3 +1,7 @@
+from PolicyTree import *
+
 class Thinker:
     def __init__(self, name):
-        pass
+        self.name = name
+        self.tree = PolicyTree(name)
+

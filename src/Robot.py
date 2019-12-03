@@ -8,6 +8,7 @@ from Thinker import *
 from debug import *
 from devices.Microphone import *
 from devices.Speaker import *
+from devices.Camera import *
 
 
 class Robot:
@@ -37,8 +38,8 @@ class Robot:
 
         self.observer.initialize()
         self.observer.register_device('microphone', Microphone(self.name))
+        self.observer.register_device('camera', Camera(self.name))
         self.actor.register_device('speaker', Speaker(self.name))
-        self.actor.devices['speaker'].act("Hi, I am " + self.name)
 
     def observe(self):
         self.observer.observe()

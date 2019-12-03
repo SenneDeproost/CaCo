@@ -9,7 +9,7 @@ class Observer:
         self.hosted = hosted
         self.name = name
         self.active = True
-        threading.Thread(target=self.observe_loop, args=()).start()
+        #threading.Thread(target=self.observe_loop, args=()).start()
 
     def register_device(self, name, device):
         self.devices[name] = device

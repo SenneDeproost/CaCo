@@ -11,6 +11,7 @@ class PolicyTree:
         self.tree = Node("root")
         self.agent_name = agent_name
         self.wp = self.tree
+        self.grade = 0
 
     def save(self):
         extension = ".rpt"
@@ -32,8 +33,10 @@ class PolicyTree:
             f.close()
         self.tree = importer.import_(data)
 
-    def add(self, name,  parent_node):
-        Node(name, parent=parent_node)
+    def add(self, name, actions,  parent_node):
+        node = Node(name, parent=parent_node)
+        node.actions = actions
+        node.score = 0
 
     def find(self, name):
         find(self.tree, lambda node: node.name == name)

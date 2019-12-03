@@ -11,6 +11,7 @@ robot = Robot(name="Lana")
 
 
 
+
 """ source = self.mic
  audio = self.recorder.listen(source)
  input = self.recorder.recognize_google(audio)
