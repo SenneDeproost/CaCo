@@ -34,4 +34,14 @@ class Observer:
         while self.active:
             self.observe()
 
+    def newest(self):
+        observations = {}
+        try:
+            for device in self.input_space:
+                observations[device] = self.input_space[device][-1]
+        except:
+            pass
+        return observations
+
+
 

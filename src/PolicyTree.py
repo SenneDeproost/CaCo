@@ -2,7 +2,7 @@
 from anytree import Node, RenderTree
 from anytree.exporter import JsonExporter
 from anytree.importer import JsonImporter
-from anytree.search import find
+from anytree.search import find, findall
 import json
 
 
@@ -10,8 +10,8 @@ class PolicyTree:
     def __init__(self, agent_name):
         self.tree = Node("root")
         self.agent_name = agent_name
-        self.wp = self.tree
         self.grade = 0
+        self.wp = self.tree
 
     def save(self):
         extension = ".rpt"
@@ -38,8 +38,8 @@ class PolicyTree:
         node.actions = actions
         node.score = 0
 
-    def find(self, name):
-        find(self.tree, lambda node: node.name == name)
+    def find_(self, name, parent):
+        find(self.tree, lambda node: node.name == name and node.parent == parent)
 
     def adhere_random(self):
         pass
@@ -47,10 +47,11 @@ class PolicyTree:
     def adhere_best(self):
         pass
 
-    def update_score_wp(self):
+    def update_score(self):
         pass
 
-    def best_child(self):
+    def best_action(self, input, state):
+
         pass
 
 

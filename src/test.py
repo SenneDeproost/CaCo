@@ -8,6 +8,7 @@ warnings.filterwarnings("ignore")
 #observer = Observer(hosted=True, name="Jos")
 
 robot = Robot(name="Lana")
+#robot.observe()
 
 
 
