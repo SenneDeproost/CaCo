@@ -15,6 +15,7 @@ class Robot:
     def __init__(self, name, remotes=None):
         self.name = name
         self.remotes = remotes
+        self.state = 0
         log("Initializing robot", self.name)
         self.observer = Observer(self.name)
         self.thinker = Thinker(self.name)
@@ -54,6 +55,8 @@ class Robot:
         pass
 
     def act(self):
+        self.actor.act()
+        new_states = self.observer.newest()
         pass
 
     def ota(self):
