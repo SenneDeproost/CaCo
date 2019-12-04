@@ -4,6 +4,7 @@ from anytree.exporter import JsonExporter
 from anytree.importer import JsonImporter
 from anytree.search import find, findall
 import json
+import random
 
 
 class PolicyTree:
@@ -12,6 +13,7 @@ class PolicyTree:
         self.agent_name = agent_name
         self.grade = 0
         self.wp = self.tree
+        self.actions = ["1", "2"]
 
     def save(self):
         extension = ".rpt"
@@ -33,9 +35,8 @@ class PolicyTree:
             f.close()
         self.tree = importer.import_(data)
 
-    def add(self, name, actions,  parent_node):
+    def add(self, name,  parent_node):
         node = Node(name, parent=parent_node)
-        node.actions = actions
         node.score = 0
 
     def find_(self, name, parent):
@@ -44,15 +45,36 @@ class PolicyTree:
     def adhere_random(self):
         pass
 
-    def adhere_best(self):
+    def adhere_kb_best(self):
         pass
 
     def update_score(self):
         pass
 
-    def best_action(self, input, state):
 
-        pass
+
+
+
+    def best_action(self):
+        possibilities = self.wp.children
+        best = None
+        if len(possibilities) == 0:
+            self.adhere_random()  # Every action has score 0, so do random
+        else:
+            best = possibilities[0]
+        for pos in possibilities[1:]:
+            if pos.score > best.score:
+                best = pos
+        return best
+
+
+    def random_action(self):
+        action = random.choice(self.actions)
+        children = self.wp.children
+        exist = self.find_(action, self.wp.name)
+        if not exist:
+            self.add(action, self.wp)
+        return action
 
 
 
