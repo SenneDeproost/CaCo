@@ -17,7 +17,6 @@ class Thinker:
             action = best_action
         else:
             action = random_action
-
         return action
 
     def feedback(self, score, input, action, new_state):

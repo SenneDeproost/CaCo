@@ -13,8 +13,7 @@ class Speaker:
     def act(self, sentence):
         log("Speaking: " + sentence, self.owner)
         file = "speech.mp3"
-        tts = gTTS(sentence, 'en-us')
+        tts = gTTS(sentence, 'nl')
         tts.save(file)
         os.system("mpg123 " + file)
-
 

@@ -40,10 +40,11 @@ class PolicyTree:
         node.score = 0
 
     def find_(self, name, parent):
-        find(self.tree, lambda node: node.name == name and node.parent == parent)
+        return find(self.tree, lambda node: node.name == name and node.parent == parent)
 
     def adhere_random(self):
-        pass
+        action = random.choice(self.actions)
+        self.add(action, self.wp)
 
     def adhere_kb_best(self):
         pass
