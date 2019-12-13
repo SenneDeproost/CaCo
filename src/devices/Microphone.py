@@ -14,7 +14,8 @@ class Microphone:
         input = ""
         with self.mic as source:
             log("Listening...", self.owner)
-            audio = self.recorder.record(source, duration=4) #### !!!!!!! change to listen afterwards
+            #audio = self.recorder.record(source, duration=4) #### !!!!!!! change to listen afterwards
+            audio = self.recorder.listen(source)
             log("Recognizing speech...", self.owner)
             input = self.recorder.recognize_google(audio)
             log("Heard: " + input, self.owner)

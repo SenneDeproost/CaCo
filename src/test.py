@@ -6,13 +6,15 @@ import warnings
 warnings.filterwarnings("ignore")
 
 #observer = Observer(hosted=True, name="Jos")
-name = "Caco"
+name = "Lana"
 robot = Robot(name)
 robot.actor.devices['speaker'].act("Hi! I am " + robot.name + ".")
+robot.observe()
 while (True):
-    robot.observe()
     robot.think(robot.observer.newest())
     robot.act(robot.thinker.newest())
+    robot.done()
+
 
 
 

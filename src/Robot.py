@@ -59,8 +59,8 @@ class Robot:
         self.actor.output_space['speaker'].append(action)
         self.actor.act()
         self.state = self.thinker.newest()
-        reward = int(input("Feedback score: "))
-        self.thinker.feedback(reward, action, self.state)
+        #reward = int(input("Feedback score: "))
+        #self.thinker.feedback(reward, action, self.state)
 
     def ota(self):
         self.observe()
@@ -68,3 +68,24 @@ class Robot:
         self.think(observations)
         actions = self.thinker.newest()
         self.act(actions)
+
+    def done(self):
+        loop = True
+        while loop:
+            self.observe()
+            obs = self.observer.newest()
+            if any(word in obs['microphone'] for word in ["satisfied", "finish", "finished"]):
+                self.ask_feedback()
+            elif any(word in obs['microphone'] for word in ["done", "ok", "okay", "ready"]):
+                loop = False
+
+
+
+    def ask_feedback(self):
+        self.actor.devices['speaker'].act("Are you satisfied with the " + self.name + " experience?")
+        self.observe()
+        if self.observer.newest()['microphone'] == "yes":
+            self.thinker.feedback(1, 1, 1, 1)
+        else:
+            self.thinker.feedback(1, 1, 0, 1)
+        self.actor.devices['speaker'].act("Thank you, come again!")
