@@ -50,13 +50,14 @@ class Robot:
         while True:
             result = self.observer.devices['microphone']
 
-    def think(self, input):
-        self.thinker.think(input)
+    def think(self, i):
+        i['state'] = self.state
+        self.thinker.think(i)
         pass
 
     def act(self):
         self.actor.act()
-        new_states = self.observer.newest()
+        self.state = self.actor.latest()
         pass
 
     def ota(self):

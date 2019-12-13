@@ -9,10 +9,10 @@ class TransMatrix:
 
 
 class PolicyMatrix:
-    def __init__(self, n_states, n_actions):
-        self.n_action = n_actions
+    def __init__(self, name, n_states, n_actions):
+        self.n_actions = n_actions
         self.n_states = n_states
-        self.policy = np.zeroes([n_states, n_actions])
+        self.policy = np.zeros([n_states, n_actions])
 
     def best(self, state_indx):
         return np.argmax(self.policy[state_indx])

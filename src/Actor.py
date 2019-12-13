@@ -16,4 +16,5 @@ class Actor:
     def act(self):
         for name, device in self.devices.items():
             output = self.output_space[name][-1]
+            log("Acting on output device " + name + ": " + output, self.name)
             device.act(output)

@@ -6,9 +6,11 @@ import warnings
 warnings.filterwarnings("ignore")
 
 #observer = Observer(hosted=True, name="Jos")
-
-robot = Robot(name="Lana")
+name = "Caco"
+robot = Robot(name)
+robot.actor.devices['speaker'].act("Hi! I am " + robot.name + ".")
 robot.observe()
+print(robot.think(robot.observer.newest()))
 
 
 

@@ -5,11 +5,12 @@ class KnowledgeBase:
         self.input_file = input_file
         self.kb = []
 
-    def add_entry(self, score, content, parent="root"):
+    def add_entry(self, score, content, parent="root", allowed=[]):
         entry = {}
         entry['content'] = content
         entry['score'] = score
         entry['parent'] = parent
+        entry['allowed'] = allowed
         self.kb.append(entry)
 
     def find_entry(self, score=None, content=None, parent=None):
@@ -21,6 +22,11 @@ class KnowledgeBase:
         if parent:
             result.extend(list(filter(lambda entry: entry['parent'] == parent, self.kb)))
         return list(set(result))
+
+    def initialize(self):
+        data = 0
+        with open(self.input_file, 'r') as f:
+            self.kb = json.load(f)
 
     def update_entry(self, content, parent):
         

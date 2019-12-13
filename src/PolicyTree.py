@@ -5,6 +5,7 @@ from anytree.importer import JsonImporter
 from anytree.search import find, findall
 import json
 import random
+from KnowledgeBase import *
 
 
 class PolicyTree:
@@ -13,7 +14,7 @@ class PolicyTree:
         self.agent_name = agent_name
         self.grade = 0
         self.wp = self.tree
-        self.actions = ["1", "2"]
+        self.kb = KnowledgeBase()
 
     def save(self):
         extension = ".rpt"
