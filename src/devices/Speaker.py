@@ -11,6 +11,7 @@ class Speaker:
         self.owner = owner
 
     def act(self, sentence):
+        sentence = str(sentence)
         log("Speaking: " + sentence, self.owner)
         file = "speech.mp3"
         tts = gTTS(sentence, 'en')

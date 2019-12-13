@@ -9,8 +9,11 @@ warnings.filterwarnings("ignore")
 name = "Caco"
 robot = Robot(name)
 robot.actor.devices['speaker'].act("Hi! I am " + robot.name + ".")
-robot.observe()
-print(robot.think(robot.observer.newest()))
+while (True):
+    robot.observe()
+    robot.think(robot.observer.newest())
+    robot.act(robot.thinker.newest())
+
 
 
 

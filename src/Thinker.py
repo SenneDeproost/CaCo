@@ -8,8 +8,8 @@ class Thinker:
         self.name = name
         self.tree = PolicyTree(name)
         self.policy = PolicyMatrix(name, 21, 21)
-        self.state = None
-        self.epsilon = 0.9
+        self.state = 0
+        self.epsilon = 0.1
         self.states = [0]
         self.actions = [0]
 
@@ -28,6 +28,10 @@ class Thinker:
 
     def feedback(self, reward, action, new_state):
         self.policy.update(self.state, action, new_state, reward)
+
+
+    def newest(self):
+        return self.actions[-1]
 
 
 

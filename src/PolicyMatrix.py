@@ -1,10 +1,10 @@
 import numpy as np
 import random
 
-class TransMatrix:
-    def __init__(self):
-        self.transitions = np.ones([20, 20])
-        self.transitions[:,0] = 0
+#class TransMatrix:
+#    def __init__(self):
+#        self.transitions = np.ones([20, 20])
+#        self.transitions[:,0] = 0
 
 
 
@@ -18,7 +18,8 @@ class PolicyMatrix:
         return np.argmax(self.policy[state_indx])
 
     def random(self):
-        return random.randint(0, self.n_actions)
+        return random.randint(0, self.n_actions - 1)
 
     def update(self, old_state, action, new_state, reward):
+        print(old_state, action, new_state, reward)
         self.policy[old_state][action] += 0.9*(reward + 0.9*np.max(self.policy[new_state, :]) - self.policy[old_state, action])

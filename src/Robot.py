@@ -52,13 +52,15 @@ class Robot:
 
     def think(self, i):
         i['state'] = self.state
-        self.thinker.think(i)
-        pass
+        action = self.thinker.think(i)
+        return action
 
-    def act(self):
+    def act(self, action):
+        self.actor.output_space['speaker'].append(action)
         self.actor.act()
-        self.state = self.actor.latest()
-        pass
+        self.state = self.thinker.newest()
+        reward = int(input("Feedback score: "))
+        self.thinker.feedback(reward, action, self.state)
 
     def ota(self):
         self.observe()
