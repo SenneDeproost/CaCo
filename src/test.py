@@ -9,11 +9,13 @@ warnings.filterwarnings("ignore")
 name = "Lana"
 robot = Robot(name)
 robot.actor.devices['speaker'].act("Hi! I am " + robot.name + ".")
-robot.observe()
-while (True):
-    robot.think(robot.observer.newest())
-    robot.act(robot.thinker.newest())
-    robot.done()
+done = False
+while not done:
+    robot.otao()
+    if robot.session_done:
+        done = True
+robot.ask_feedback()
+
 
 
 

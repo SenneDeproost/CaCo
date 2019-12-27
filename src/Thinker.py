@@ -12,22 +12,22 @@ class Thinker:
         self.epsilon = 0.1
         self.states = [0]
         self.actions = [0]
+        self.counter = -1
 
-    counter = -1
     def think(self, i):
-        l = [“Lets sort through this together”,
+        l = ["Lets sort through this together",
         "Visualize yourself in a nice situation during the day",
-        “Your worries are not silly”,
+        "Your worries are not silly",
         "Make a cup of coffee or tea, slow down and notice the ritual",
-        “Take, your time”,
+        "Take, your time",
         "Think about 3 things you liked about this week",
         "What is a robot’s favorite type of music? - Heavy metal!",
         "I am proud of you. Good job.",
         "Try to focus on the tense areas in your body and pay attention to how you feel",
-        “You are capable, you are wstrong”]
-        counter = counter + 1
-        return l[counter]
-
+        "You are capable, you are strong"]
+        self.counter = self.counter + 1
+        self.actions.append(l[self.counter])
+        #return "Hahaha"
         """
         state = i['state']
         best_action = self.policy.best(state)

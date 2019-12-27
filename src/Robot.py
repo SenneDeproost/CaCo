@@ -16,10 +16,12 @@ class Robot:
         self.name = name
         self.remotes = remotes
         self.state = 0
+        self.status = "running"
         log("Initializing robot", self.name)
         self.observer = Observer(self.name)
         self.thinker = Thinker(self.name)
         self.actor = Actor(self.name)
+        self.session_done = False
         if self.remotes:
             # Observer
             try:
@@ -51,8 +53,9 @@ class Robot:
             result = self.observer.devices['microphone']
 
     def think(self, i):
-        i['state'] = self.state
+        #i['state'] = self.state
         action = self.thinker.think(i)
+        print(action)
         return action
 
     def act(self, action):
@@ -62,6 +65,15 @@ class Robot:
         #reward = int(input("Feedback score: "))
         #self.thinker.feedback(reward, action, self.state)
 
+    def check_status(self):
+        obs = self.observer.newest()
+        if any(word in obs['microphone'] for word in ["satisfied", "finish", "finished"]):
+            self.status = "session done"
+            self.session_done = True
+        elif any(word in obs['microphone'] for word in ["done", "ok", "okay", "ready"]):
+            self.status = "step done"
+
+
     def ota(self):
         self.observe()
         observations = self.observer.newest()
@@ -69,15 +81,20 @@ class Robot:
         actions = self.thinker.newest()
         self.act(actions)
 
-    def done(self):
-        loop = True
-        while loop:
+    def otao(self):
+        self.ota()
+        done = False
+        while not done:
             self.observe()
-            obs = self.observer.newest()
-            if any(word in obs['microphone'] for word in ["satisfied", "finish", "finished"]):
-                self.ask_feedback()
-            elif any(word in obs['microphone'] for word in ["done", "ok", "okay", "ready"]):
-                loop = False
+            self.check_status()
+            if self.status in ["step done", "session done"]:
+                done = True
+                self.status = "running"     # Reset the robot status
+
+
+
+
+
 
 
 
@@ -85,7 +102,9 @@ class Robot:
         self.actor.devices['speaker'].act("Are you satisfied with the " + self.name + " experience?")
         self.observe()
         if self.observer.newest()['microphone'] == "yes":
-            self.thinker.feedback(1, 1, 1, 1)
+            pass
+            #self.thinker.feedback(1, 1, 1, 1)
         else:
-            self.thinker.feedback(1, 1, 0, 1)
+            pass
+            #self.thinker.feedback(1, 1, 0, 1)
         self.actor.devices['speaker'].act("Thank you, come again!")
