@@ -1,5 +1,6 @@
 import Pyro4 as pyro
 from debug import *
+import json
 
 class Actor:
     def __init__(self, name, hosted=False):
@@ -7,6 +8,11 @@ class Actor:
         self.devices = {}
         self.hosted = hosted
         self.name = name
+        # Possible action space
+        self.sentences_file = open("actions.json")
+        self.actions = {}
+        self.actions['speaker'] = json.load(self.sentences_file)
+        self.actions['display'] = []
 
     def register_device(self, name, device):
         self.devices[name] = device
@@ -15,7 +21,7 @@ class Actor:
 
     def act(self):
         for name, device in self.devices.items():
-            output = self.output_space[name][-1]
+            output = self.actions[name][self.output_space[name][-1]]
             log("Acting on output device " + name + ": " + str(output), self.name)
             device.act(output)
 
