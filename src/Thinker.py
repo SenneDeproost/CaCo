@@ -7,7 +7,7 @@ class Thinker:
     def __init__(self, name):
         self.name = name
         self.tree = PolicyTree(name)
-        self.policy = PolicyMatrix(name, 21, 21)
+        self.policy = PolicyMatrix(name, 99, 21)
         self.state = 0
         self.epsilon = 0.1
         self.states = [0]
@@ -15,21 +15,7 @@ class Thinker:
         self.counter = -1
 
     def think(self, i):
-        l = ["Lets sort through this together",
-        "Visualize yourself in a nice situation during the day",
-        "Your worries are not silly",
-        "Make a cup of coffee or tea, slow down and notice the ritual",
-        "Take, your time",
-        "Think about 3 things you liked about this week",
-        "What is a robot’s favorite type of music? - Heavy metal!",
-        "I am proud of you. Good job.",
-        "Try to focus on the tense areas in your body and pay attention to how you feel",
-        "You are capable, you are strong"]
-        self.counter = self.counter + 1
-        self.actions.append(l[self.counter])
-        #return "Hahaha"
-        """
-        state = i['state']
+        state = self.state
         best_action = self.policy.best(state)
         random_action = self.policy.random()
         if random.random() < self.epsilon:
@@ -39,11 +25,11 @@ class Thinker:
             action = random_action
             log("Chosing random action: " + str(action), self.name)
         self.actions.append(action)
+        self.state += 1  # State represent the number of sentences thought by the thinker
         return action
-        """
 
-    def feedback(self, reward, action, new_state):
-        self.policy.update(self.state, action, new_state, reward)
+    def feedback(self, reward):
+        self.policy.update(self.state - 1, self.actions[-1], self.state, reward)
 
 
     def newest(self):

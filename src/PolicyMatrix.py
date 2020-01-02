@@ -23,3 +23,4 @@ class PolicyMatrix:
     def update(self, old_state, action, new_state, reward):
         print(old_state, action, new_state, reward)
         self.policy[old_state][action] += 0.9*(reward + 0.9*np.max(self.policy[new_state, :]) - self.policy[old_state, action])
+        print(self.policy[old_state][action])

@@ -12,6 +12,9 @@ robot.actor.devices['speaker'].act("Hi! I am " + robot.name + ".")
 done = False
 while not done:
     robot.otao()
+    state = robot.state
+    feedback = int(input("> "))
+    robot.thinker.feedback(feedback)
     if robot.session_done:
         done = True
 robot.ask_feedback()

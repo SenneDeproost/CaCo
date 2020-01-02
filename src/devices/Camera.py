@@ -6,7 +6,7 @@ from debug import *
 
 class Camera:
     def __init__(self, owner):
-        self.owner = owner
+        self.owner = owner 
         try:
             pass
         except:
