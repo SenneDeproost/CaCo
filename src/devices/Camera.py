@@ -1,6 +1,7 @@
 import speech_recognition as sr
 import warnings
 from debug import *
+from devices.reco.exp_reco import *
 
 
 
@@ -16,10 +17,12 @@ class Camera:
         input = ""
         try:
             log("Seeing...", self.owner)
-            input = "darkness"
-            log("Saw: " + input, self.owner)
-        except:
-            pass
+            for i in range(50):
+                recoRun()
+            input = score
+            log("Saw: " + str(input), self.owner)
+        except Exception as e:
+            print(e)
         return input
 
 

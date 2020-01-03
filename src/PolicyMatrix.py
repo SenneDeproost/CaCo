@@ -1,5 +1,6 @@
 import numpy as np
 import random
+import json
 
 #class TransMatrix:
 #    def __init__(self):
@@ -24,3 +25,11 @@ class PolicyMatrix:
         print(old_state, action, new_state, reward)
         self.policy[old_state][action] += 0.9*(reward + 0.9*np.max(self.policy[new_state, :]) - self.policy[old_state, action])
         print(self.policy[old_state][action])
+
+    def load(self, file_name):
+        f = open("data/policies/matrix/" + file_name)
+        self.policy = json.load(f)
+
+    def save(self, file_name):
+        f = open("data/policies/matrix/" + file_name, 'w')
+        json.dump(self.policy, f)
