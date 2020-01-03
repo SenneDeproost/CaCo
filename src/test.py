@@ -9,7 +9,7 @@ warnings.filterwarnings("ignore")
 name = "Lana"
 robot = Robot(name)
 robot.actor.devices['speaker'].act("Hi! I am " + robot.name + ".")
-#robot.thinker.policy.load(name + ".json")
+robot.thinker.policy.load(name + ".json")
 done = False
 while not done:
     robot.otao()
@@ -18,7 +18,8 @@ while not done:
     robot.thinker.feedback(feedback)
     if robot.session_done:
         done = True
-robot.ask_feedback()
+#robot.ask_feedback()
+robot.thinker.policy.save(name + ".json")
 
 
 

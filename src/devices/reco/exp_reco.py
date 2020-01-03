@@ -22,7 +22,7 @@ model.load_weights('facial_expression_model_weights.h5')  # load weights
 
 emotions = ('angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral')
 scores = (-1, -1, -1, 1, -1, 1, 0)
-score = 0
+#score = 0
 
 observed_emotions = []
 
@@ -30,11 +30,12 @@ run = True
 cap = cv2.VideoCapture(0)
 
 def recoRun():
+    score = 0
 
 
 
     while (run):
-        print(time.time())
+        #print(time.time())
         ret, img = cap.read()
         # img = cv2.imread('C:/Users/IS96273/Desktop/hababam.jpg')
 
@@ -70,15 +71,14 @@ def recoRun():
             # -------------------------
 
             observed_emotions.append(emotion)
-            global score
-            score = score + scores[max_index]
-            print(emotion + " " + str(score))
+            score =  scores[max_index]
+            #print(emotion + " " + str(score))
 
         cv2.imshow('img', img)
         if cv2.waitKey(1) & 0xFF == ord('q'):  # press q to quit
             #t1.stop()
             break
-        break
+        return score
 #t1 = Thread(target = recoRun)
 #t1.setDaemon(True)
 #t1.start()

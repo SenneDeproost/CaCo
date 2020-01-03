@@ -1,5 +1,6 @@
 import Pyro4 as pyro
 from debug import *
+import time
 import threading
 @pyro.expose
 class Observer:
@@ -27,8 +28,12 @@ class Observer:
 
     def observe(self):
         for name, device in self.devices.items():
-            observation = device.observe()
+            device.observe()
+        time.sleep(3)
+        for name, device in self.devices.items():
+            observation = device.observation
             self.input_space[name].append(observation)
+
 
     def observe_loop(self):
         while self.active:
