@@ -27,9 +27,9 @@ class PolicyMatrix:
         print(self.policy[old_state][action])
 
     def load(self, file_name):
-        f = open("data/policies/matrix/" + file_name)
-        self.policy = json.load(f)
+        f = open("../data/policies/matrix/" + file_name)
+        self.policy = np.array(json.load(f))
 
     def save(self, file_name):
-        f = open("data/policies/matrix/" + file_name, 'w')
-        json.dump(self.policy, f)
+        f = open("../data/policies/matrix/" + file_name, 'w')
+        json.dump(self.policy.tolist(), f)
