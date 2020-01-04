@@ -19,7 +19,7 @@ class Camera:
         try:
             log("Seeing...", self.owner)
             score = 0
-            for i in range(30):
+            for i in range(50):
                 score += recoRun()
             input = score
             log("Saw: " + str(input), self.owner)
