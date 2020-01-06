@@ -16,5 +16,5 @@ class Speaker:
         file = "speech.mp3"
         tts = gTTS(sentence, 'en')
         tts.save(file)
-        os.system("mpg123 " + file)
+        os.system("mpg123 -q " + file)
 

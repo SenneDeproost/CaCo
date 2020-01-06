@@ -2,6 +2,7 @@ from threading import Thread
 
 import speech_recognition as sr
 from debug import *
+import os
 
 
 class Microphone:
@@ -17,9 +18,11 @@ class Microphone:
         try:
             with self.mic as source:
                 log("Listening...", self.owner)
+                os.system("mpg123 -q beep_talk.mp3")
                 try:
                     audio = self.recorder.record(source, duration=4)  #### !!!!!!! change to listen afterwards
                      # audio = self.recorder.listen(source)
+                    os.system("mpg123 -q beep_heard.mp3")
                     log("Recognizing speech...", self.owner)
                     input = self.recorder.recognize_google(audio)
                      # input = self.recorder.recognize_sphinx(audio)

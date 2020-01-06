@@ -74,7 +74,7 @@ def recoRun():
             score =  scores[max_index]
             #print(emotion + " " + str(score))
 
-        cv2.imshow('img', img)
+        #cv2.imshow('img', img) /// Enable to see face
         if cv2.waitKey(1) & 0xFF == ord('q'):  # press q to quit
             #t1.stop()
             break

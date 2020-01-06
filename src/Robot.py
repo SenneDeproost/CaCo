@@ -9,6 +9,8 @@ from debug import *
 from devices.Microphone import *
 from devices.Speaker import *
 from devices.Camera import *
+from devices.Eyes import *
+import time
 
 
 class Robot:
@@ -22,6 +24,7 @@ class Robot:
         self.thinker = Thinker(self.name)
         self.actor = Actor(self.name)
         self.session_done = False
+        self.vague = False
         if self.remotes:
             # Observer
             try:
@@ -43,6 +46,7 @@ class Robot:
         self.observer.register_device('microphone', Microphone(self.name))
         self.observer.register_device('camera', Camera(self.name))
         self.actor.register_device('speaker', Speaker(self.name))
+        self.actor.register_device('eyes', Eyes(self.name))
 
     def observe(self):
         self.observer.observe()
@@ -60,6 +64,8 @@ class Robot:
 
     def act(self, action):
         self.actor.output_space['speaker'].append(action)
+        self.actor.output_space['eyes'].append(action)
+        #self.actor.output_space['eyes'].append
         self.actor.act()
         self.state = self.thinker.newest()
         #reward = int(input("Feedback score: "))
@@ -72,14 +78,21 @@ class Robot:
             self.session_done = True
         elif any(word in obs['microphone'] for word in ["done", "ok", "okay", "ready"]):
             self.status = "step done"
+        elif not self.vague:
+            self.actor.devices['eyes'].act('vagueleft')
+            self.vague = True
 
 
     def ota(self):
         self.observe()
         observations = self.observer.newest()
+        self.actor.devices['eyes'].act('closed')
+        time.sleep(2)
         self.think(observations)
         actions = self.thinker.newest()
+        self.actor.devices['eyes'].act('amused')
         self.act(actions)
+        self.actor.devices['eyes'].act('neutral')
 
     def otao(self):
         self.ota()
@@ -90,6 +103,7 @@ class Robot:
             if self.status in ["step done", "session done"]:
                 done = True
                 self.status = "running"     # Reset the robot status
+
 
 
 

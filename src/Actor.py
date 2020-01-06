@@ -13,6 +13,7 @@ class Actor:
         self.actions = {}
         self.actions['speaker'] = json.load(self.sentences_file)
         self.actions['display'] = []
+        self.actions['eyes'] = []
 
     def register_device(self, name, device):
         self.devices[name] = device
@@ -20,8 +21,16 @@ class Actor:
         log("Registered output device " + name, self.name)
 
     def act(self):
+        name = 'speaker'
+        device = self.devices[name]
+        output = self.actions[name][self.output_space[name][-1]]
+        log("Acting on output device " + name + ": " + str(output), self.name)
+        device.act(output)
+        """
         for name, device in self.devices.items():
+            print(self.actions[name][self.output_space[name]])
             output = self.actions[name][self.output_space[name][-1]]
             log("Acting on output device " + name + ": " + str(output), self.name)
             device.act(output)
+            """
 
