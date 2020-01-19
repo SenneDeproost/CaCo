@@ -16,10 +16,11 @@ class PolicyMatrix:
         self.policy = np.zeros([n_states, n_actions])
 
     def best(self, state_indx):
-        return np.argmax(self.policy[state_indx])
+        return np.argmax(self.policy[0:15][state_indx])
 
     def random(self):
-        return random.randint(0, self.n_actions - 1)
+        #return random.randint(0, self.n_actions - 1)
+        return random.randint(0, 16 - 1)
 
     def update(self, old_state, action, new_state, reward):
         print(old_state, action, new_state, reward)

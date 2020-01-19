@@ -21,7 +21,7 @@ model.load_weights('facial_expression_model_weights.h5')  # load weights
 # -----------------------------
 
 emotions = ('angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral')
-scores = (-1, -1, -1, 1, -1, 1, 0)
+scores = (0, 0, 0, 1, 0, 1, 0)
 #score = 0
 
 observed_emotions = []
@@ -74,7 +74,7 @@ def recoRun():
             score =  scores[max_index]
             #print(emotion + " " + str(score))
 
-        #cv2.imshow('img', img) /// Enable to see face
+        #cv2.imshow('img', img) # Enable to see face
         if cv2.waitKey(1) & 0xFF == ord('q'):  # press q to quit
             #t1.stop()
             break

@@ -33,6 +33,9 @@ class Thinker:
     def feedback(self, reward):
         self.policy.update(self.state - 1, self.chosen_actions[-1], self.state, reward)
 
+    def last_feedback(self, old_state, new_state, action, reward):
+        self.policy.update(old_state, action, new_state, reward)
+
     def newest(self):
         return self.chosen_actions[-1]
 

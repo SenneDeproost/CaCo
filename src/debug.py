@@ -1,11 +1,20 @@
 from time import gmtime, strftime
+import time
 
 counter = 1
 
+name = "logs/" + str(round(time.time())) + ".log"
+open(name, 'a').close()
+print("--------------------")
+print(name)
+print("--------------------")
 
 def log(msg, agent):
     global counter
     time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
     string = "[" + time + "] (" + agent.upper() + ") |" + str(counter) + "| " + msg
     counter = counter + 1
-   # print(string)
+    f = open(name, "a+")
+    f.write(string)
+    f.write("\n")
+    f.close()

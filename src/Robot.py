@@ -25,6 +25,10 @@ class Robot:
         self.actor = Actor(self.name)
         self.session_done = False
         self.vague = False
+        self.actions = []
+        self.rewards = []
+        self.cont_reward = []
+
         if self.remotes:
             # Observer
             try:
@@ -52,14 +56,9 @@ class Robot:
         self.observer.observe()
         pass
 
-    def await_name(self):
-        while True:
-            result = self.observer.devices['microphone']
-
     def think(self, i):
-        #i['state'] = self.state
         action = self.thinker.think(i)
-        print(action)
+        self.actions.append(action)
         return action
 
     def act(self, action):
@@ -73,18 +72,20 @@ class Robot:
 
     def check_status(self):
         obs = self.observer.newest()
-        if any(word in obs['microphone'] for word in ["satisfied", "finish", "finished"]):
+        if any(word in obs['microphone'] for word in ["stop", "kill", "nine nine", "satisfied"]):
+            os.system("mpg123 -q understood.mp3")
             self.status = "session done"
             self.session_done = True
-        elif any(word in obs['microphone'] for word in ["done", "ok", "okay", "ready"]):
+        elif any(word in obs['microphone'] for word in ["thanks", "ok", "okay", "ready",  "ha", "haha", "hahaha"]):
+            os.system("mpg123 -q understood.mp3")
             self.status = "step done"
         elif not self.vague:
+            os.system("mpg123 -q not_understood.mp3")
             self.actor.devices['eyes'].act('vagueleft')
             self.vague = True
 
-
-    def ota(self):
-        self.observe()
+    def ta(self):
+        #self.observe()
         observations = self.observer.newest()
         self.actor.devices['eyes'].act('closed')
         time.sleep(2)
@@ -94,31 +95,35 @@ class Robot:
         self.act(actions)
         self.actor.devices['eyes'].act('neutral')
 
-    def otao(self):
-        self.ota()
+    def tao(self):
+        self.actor.devices['eyes'].act('neutral')
+        self.ta()
         done = False
         while not done:
             self.observe()
             self.check_status()
             if self.status in ["step done", "session done"]:
+                feedback = self.observer.newest()['camera']
+                #self.cont_reward += feedback
+                self.thinker.feedback(feedback)
+                self.rewards.append(feedback)
                 done = True
                 self.status = "running"     # Reset the robot status
-
-
-
-
-
-
-
-
 
     def ask_feedback(self):
         self.actor.devices['speaker'].act("Are you satisfied with the " + self.name + " experience?")
         self.observe()
         if self.observer.newest()['microphone'] == "yes":
-            pass
+            old_state = 0
+            new_state = 1
+            for index in range(0, len(self.actions)):
+                self.thinker.last_feedback(old_state, new_state, self.actions[index], self.rewards[index])
+                old_state += 1
+                new_state += 1
             #self.thinker.feedback(1, 1, 1, 1)
         else:
             pass
             #self.thinker.feedback(1, 1, 0, 1)
+        self.actor.devices['eyes'].act('amused')
         self.actor.devices['speaker'].act("Thank you, come again!")
+
