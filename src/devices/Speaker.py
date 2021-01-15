@@ -14,7 +14,7 @@ class Speaker:
         sentence = str(sentence)
         log("Speaking: " + sentence, self.owner)
         file = "speech.mp3"
-        tts = gTTS(sentence, 'en')
+        tts = gTTS(text=sentence)
         tts.save(file)
         os.system("mpg123 -q " + file)
 

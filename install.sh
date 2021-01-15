@@ -1,6 +1,6 @@
 #! usr/bin/bash
 
-pip3.7 install --user virtualenv
-virtualenv --python=/usr/bin/python3.7 venv
+pip3 install --user virtualenv
+virtualenv --python=/usr/bin/python venv
 source venv/bin/activate
 pip install -r requirements.txt

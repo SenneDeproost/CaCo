@@ -3,8 +3,8 @@ import time
 
 counter = 1
 
-name = "logs/" + str(round(time.time())) + ".log"
-open(name, 'a').close()
+name = "../logs/" + str(round(time.time())) + ".log"
+open(name, 'w+').close()
 print("--------------------")
 print(name)
 print("--------------------")
