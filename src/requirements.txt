@@ -1,5 +1,5 @@
 anytree==2.7.3
-numpy==1.17.4
+numpy==1.22.0
 SpeechRecognition==3.8.1
 gTTS==2.0.4
 pygame==1.9.6
